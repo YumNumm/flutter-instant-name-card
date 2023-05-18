@@ -7,6 +7,7 @@ import 'package:flutter_name_card_printer/feature/input/model/sns_account_model.
 import 'package:flutter_name_card_printer/feature/input/viewmodel/input_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class InputScreen extends ConsumerWidget {
   const InputScreen({super.key});
@@ -18,6 +19,25 @@ class InputScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('名刺の内容を入力'),
         actions: [
+          // showQR
+          IconButton(
+            onPressed: () async {
+              await showModalBottomSheet<void>(
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: QrImageView(
+                      data: ref
+                          .read(inputViewModelProvider.notifier)
+                          .exportAsQRString(),
+                    ),
+                  );
+                },
+              );
+            },
+            icon: const Icon(Icons.qr_code),
+          ),
           // loadQR
           IconButton(
             onPressed: () async {
@@ -58,7 +78,6 @@ class InputScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: ref.read(inputViewModelProvider.notifier).exportAsQRCode,
-//        onPressed: ref.read(inputViewModelProvider.notifier).printNameCard,
         label: const Text(
           '名刺情報をQRコードでエクスポート',
         ),
@@ -256,7 +275,11 @@ class InputScreen extends ConsumerWidget {
               padding: EdgeInsets.all(8),
               child: Divider(),
             ),
-            Text(const JsonEncoder.withIndent('  ').convert(state)),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(const JsonEncoder.withIndent('  ').convert(state)),
+            ),
+            SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
           ],
         ),
       ),

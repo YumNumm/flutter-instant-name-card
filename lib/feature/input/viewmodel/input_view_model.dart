@@ -90,6 +90,17 @@ class InputViewModel extends _$InputViewModel {
     await SunmiPrinter.lineWrap(2);
   }
 
+  String exportAsQRString() {
+    final data = jsonEncode(state);
+    // 圧縮する
+    final compressedData = base64Encode(
+      gzip.encode(
+        utf8.encode(data),
+      ),
+    );
+    return compressedData;
+  }
+
   void loadFromQrString(String qrString) {
     final data = jsonDecode(
       utf8.decode(
@@ -157,7 +168,7 @@ class InputViewModel extends _$InputViewModel {
         ..encodeJpg();
 
       final image = await cmd.getBytes();
-
+      await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
       await SunmiPrinter.printImage(
         image!,
       );
@@ -212,10 +223,13 @@ class InputViewModel extends _$InputViewModel {
       );
       await SunmiPrinter.startTransactionPrint();
       final url = state.website!;
+      await SunmiPrinter.startTransactionPrint();
+      await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
       await SunmiPrinter.printQRCode(
         url,
         errorLevel: SunmiQrcodeLevel.LEVEL_L,
       );
+      await SunmiPrinter.exitTransactionPrint();
     }
 
     // SNS

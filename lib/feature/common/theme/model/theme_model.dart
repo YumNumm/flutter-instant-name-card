@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'theme_model.freezed.dart';
@@ -20,12 +21,6 @@ class ThemeModel with _$ThemeModel {
 
   factory ThemeModel.fromJson(Map<String, dynamic> json) =>
       _$ThemeModelFromJson(json);
-}
-
-enum ThemeMode {
-  system,
-  light,
-  dark;
 }
 
 Map<String, dynamic> themeModeToJson(ThemeMode themeMode) =>

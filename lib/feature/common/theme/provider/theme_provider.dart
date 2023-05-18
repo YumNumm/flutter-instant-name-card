@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_name_card_printer/feature/common/provider/shared_preferences.dart';
 import 'package:flutter_name_card_printer/feature/common/theme/model/theme_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,16 +12,16 @@ part 'theme_provider.g.dart';
   dependencies: [
     sharedPreferences,
   ],
+  keepAlive: true,
 )
 class ThemeState extends _$ThemeState {
   @override
   ThemeModel build() {
     _prefs = ref.read(sharedPreferencesProvider);
-    // Stateの復元
-    _loadThemeMode();
     // state変化時に保存するListner
     ref.listenSelf((_, next) => _saveThemeMode(next));
-    return const ThemeModel();
+    // Stateの復元
+    return _loadThemeMode();
   }
 
   static const _themeModeKey = 'themeMode';
@@ -42,4 +43,7 @@ class ThemeState extends _$ThemeState {
       jsonEncode(themeModel.toJson()),
     );
   }
+
+  void setThemeMode(ThemeMode themeMode) =>
+      state = state.copyWith(themeMode: themeMode);
 }

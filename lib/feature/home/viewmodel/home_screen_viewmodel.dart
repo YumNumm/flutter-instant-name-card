@@ -1,3 +1,4 @@
+import 'package:flutter_name_card_printer/feature/common/router/router_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_screen_viewmodel.g.dart';
@@ -11,8 +12,11 @@ class HomeScreenViewModel {
   final HomeScreenViewModelRef ref;
 
   /// 情報入力画面へ遷移
-  void navigateToInputScreen() {
-    // final router = ref.read(goRouterProvider);
-    // router.push();
-  }
+  void navigateToInputScreen() => ref.read(goRouterProvider).push<void>(
+        const InputRoute().location,
+      );
+
+  void navigateToSettingScreen() => ref.read(goRouterProvider).push<void>(
+        const SettingRoute().location,
+      );
 }

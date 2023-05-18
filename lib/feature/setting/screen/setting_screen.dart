@@ -52,6 +52,19 @@ class SettingScreen extends ConsumerWidget {
                   ref.read(themeStateProvider.notifier).setThemeMode(themeMode);
                 }
               },
+            ),
+            ListTile(
+              title: const Text('ライセンス情報'),
+              subtitle: const Text('Ryotaro Onoue MIT License'),
+              onTap: () {
+                showAboutDialog(
+                  context: context,
+                  applicationName: '即席名刺',
+                  applicationLegalese: 'Ryotaro Onoue MIT License\n'
+                      'https://github.com/YumNumm/flutter-instant-name-card',
+                  applicationVersion: 'V1.0',
+                );
+              },
             )
           ],
         ),

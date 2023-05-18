@@ -131,7 +131,7 @@ class InputViewModel extends _$InputViewModel {
       await SunmiPrinter.printText(
         state.organization!,
         style: SunmiStyle(
-          align: SunmiPrintAlign.RIGHT,
+          align: SunmiPrintAlign.CENTER,
           fontSize: SunmiFontSize.MD,
           bold: true,
         ),
@@ -158,7 +158,6 @@ class InputViewModel extends _$InputViewModel {
 
       final image = await cmd.getBytes();
 
-      await SunmiPrinter.setAlignment(SunmiPrintAlign.RIGHT);
       await SunmiPrinter.printImage(
         image!,
       );
@@ -203,13 +202,19 @@ class InputViewModel extends _$InputViewModel {
     }
 
     // Webサイト
-    if (state.website != null) {
+    if (state.website != null && state.website!.isNotEmpty) {
       await SunmiPrinter.printText(
         state.website!,
         style: SunmiStyle(
           fontSize: SunmiFontSize.MD,
           bold: true,
         ),
+      );
+      await SunmiPrinter.startTransactionPrint();
+      final url = state.website!;
+      await SunmiPrinter.printQRCode(
+        url,
+        errorLevel: SunmiQrcodeLevel.LEVEL_L,
       );
     }
 

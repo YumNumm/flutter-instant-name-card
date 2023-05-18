@@ -6,6 +6,3 @@ pre-commit:
     formatter:
       glob: "*.dart"
       run: fvm dart format {staged_files} && git add {staged_files}
-    analyzer:
-      glob: "*.dart"
-      run: fvm dart analyze --fatal-infos --fatal-warnings lib

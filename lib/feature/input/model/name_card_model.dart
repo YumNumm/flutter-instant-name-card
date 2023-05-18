@@ -9,13 +9,11 @@ class NameCardModel with _$NameCardModel {
   const factory NameCardModel({
     /// 名前
     @Default('') String name,
-    @Default(null) String? nameKana,
-    @Default(null) String? nameEng,
+    @Default(null) String? nameSub,
 
     /// 所属組織
     @Default(null) String? organization,
-    @Default(null) String? orgnizationIconUrl,
-    @Default(null) bool? isOrganizationIconUrlValid,
+    @Default(null) String? organizationIconUrl,
 
     /// 役職
     @Default(null) String? position,
@@ -24,7 +22,7 @@ class NameCardModel with _$NameCardModel {
     @Default(null) String? phoneNumber,
 
     /// メールアドレス
-    @Default(null) String? mailAddress,
+    @Default(null) String? email,
 
     /// Webサイト
     @Default(null) String? website,

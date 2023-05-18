@@ -7,7 +7,11 @@ import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SunmiPrinter.bindingPrinter();
+  try {
+    await SunmiPrinter.bindingPrinter();
+  } on Error {
+    print('error');
+  }
 
   final prefs = await SharedPreferences.getInstance();
   runApp(
